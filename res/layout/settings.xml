@@ -1,76 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<TextView
-		android:id="@+id/twitter_setting_string"
-		android:layout_marginTop="10dip"
-		android:layout_marginLeft="10dip"
-		android:textColor="@drawable/white"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/twitter_post_auth_title" />
-	<ImageButton 
-		android:id="@+id/twitter_setting_button"
+	<TextView android:id="@+id/twitter_setting_string"
+		android:layout_marginTop="10dip" android:layout_marginLeft="10dip"
+		android:textColor="@drawable/white" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@string/twitter_post_auth_title" />
+	<ImageButton android:id="@+id/twitter_setting_button"
 		android:layout_below="@+id/twitter_setting_string"
-		android:layout_marginTop="10dip"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_marginTop="10dip" android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:background="@drawable/twitter_button_off" />
 	<TextView android:id="@+id/twitter_post_string_title"
 		android:layout_below="@+id/twitter_setting_button"
-		android:layout_marginTop="10dip"
-		android:layout_marginLeft="10dip"
-		android:textColor="@drawable/white"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/twitter_post_string_title" />
+		android:layout_marginTop="10dip" android:layout_marginLeft="10dip"
+		android:textColor="@drawable/white" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@string/twitter_post_string_title" />
 	<EditText android:id="@+id/editTwitterPostOne"
 		android:layout_below="@+id/twitter_post_string_title"
-		android:maxLength="112" 
-		android:layout_marginLeft="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="14dip"
-		android:singleLine="true" 
-		android:imeOptions="flagNoExtractUi" />
+		android:maxLength="112" android:layout_marginLeft="5dip"
+		android:layout_marginRight="5dip" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textSize="14dip"
+		android:singleLine="true" android:imeOptions="flagNoExtractUi" />
 	<EditText android:id="@+id/editTwitterPostTwo"
-		android:layout_below="@+id/editTwitterPostOne"
-		android:maxLength="112" 
-		android:layout_marginLeft="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="14dip"
-		android:singleLine="true" 
-		android:imeOptions="flagNoExtractUi" />
+		android:layout_below="@+id/editTwitterPostOne" android:maxLength="112"
+		android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textSize="14dip" android:singleLine="true" android:imeOptions="flagNoExtractUi" />
 	<EditText android:id="@+id/editTwitterPostThree"
-		android:layout_below="@+id/editTwitterPostTwo"
-		android:maxLength="112" 
-		android:layout_marginLeft="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="14dip"
-		android:singleLine="true" 
-		android:imeOptions="flagNoExtractUi" />
+		android:layout_below="@+id/editTwitterPostTwo" android:maxLength="112"
+		android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textSize="14dip" android:singleLine="true" android:imeOptions="flagNoExtractUi" />
 	<EditText android:id="@+id/editTwitterPostFour"
-		android:layout_below="@+id/editTwitterPostThree"
-		android:maxLength="112" 
-		android:layout_marginLeft="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="14dip"
-		android:singleLine="true" 
-		android:imeOptions="flagNoExtractUi" />
-	<Button
-		android:id="@+id/buttonSettingSave"
+		android:layout_below="@+id/editTwitterPostThree" android:maxLength="112"
+		android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textSize="14dip" android:singleLine="true" android:imeOptions="flagNoExtractUi" />
+	<Button android:id="@+id/buttonSettingSave"
 		android:layout_below="@+id/editTwitterPostFour"
-		android:layout_marginLeft="5dip"
-		android:layout_marginRight="5dip"
-		android:text="保存する"
-		android:layout_width="150px"
+		android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+		android:text="保存する" android:layout_width="150px"
 		android:layout_height="wrap_content" />
 </RelativeLayout>
