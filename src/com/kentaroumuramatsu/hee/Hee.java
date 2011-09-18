@@ -32,12 +32,12 @@ abstract class Hee extends Activity {
         return pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
 	}
 	
-	private boolean getIsTwitterPostUserAuthorize() {
+	public boolean getIsTwitterPostUserAuthorize() {
     	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
     	return sp.getBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, false);
 	}
 	
-	private void setIsTwitterPostUserAuthorize(boolean auth) {
+	public void setIsTwitterPostUserAuthorize(boolean auth) {
 		SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
      	Editor editor = sp.edit();
      	editor.putBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, auth);

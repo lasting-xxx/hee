@@ -18,12 +18,10 @@ import com.kentaroumuramatsu.hee.R;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -174,19 +172,7 @@ public class HeeActivity extends Hee implements OnClickListener {
         res = (int)Math.floor(Math.random() * (10-1+1))+1;
         return res;
     }
-
-	private boolean getIsTwitterPostUserAuthorize() {
-    	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
-    	return sp.getBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, false);
-	}
-	
-	private void setIsTwitterPostUserAuthorize(boolean auth) {
-		SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
-     	Editor editor = sp.edit();
-     	editor.putBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, auth);
-     	editor.commit();
-	}
-	
+    
     private class PostTwitterAsync extends AsyncTask<String, Integer, List<BindData>> {
 
         private HeeActivity heeActivity;
