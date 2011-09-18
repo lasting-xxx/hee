@@ -54,6 +54,13 @@ abstract class Hee extends Activity {
      	editor.commit();
     }
 	
+	public void setPostContent(String key, String content) {
+		SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_CONTENTS, MODE_PRIVATE);
+     	Editor editor = sp.edit();
+     	editor.putString(key, content);
+     	editor.commit();
+	}
+	
 	public String getPostContents(String key) {
     	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_CONTENTS, MODE_PRIVATE);
     	return sp.getString(key, "");
