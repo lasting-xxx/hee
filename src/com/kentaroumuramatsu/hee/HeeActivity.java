@@ -140,13 +140,13 @@ public class HeeActivity extends Hee implements OnClickListener {
         if (id == R.id.buttonHee) {
             mpHee.start();
             if(getRandomInt() == 1) {
-                twitterStrings = getString(R.string.twitter_strings_kanojo) + new Date().toString();
+                twitterStrings = getPostContents(Constants.TWITTER_POST_CONTENTS1);
             } else if(getRandomInt() == 2){
-                twitterStrings = getString(R.string.twitter_strings_yoji) + new Date().toString();
+                twitterStrings = getPostContents(Constants.TWITTER_POST_CONTENTS2);
             } else if(getRandomInt() == 3){
-                twitterStrings = getString(R.string.twitter_strings_nya) + new Date().toString();
+                twitterStrings = getPostContents(Constants.TWITTER_POST_CONTENTS3);
             } else {
-                twitterStrings = getString(R.string.twitter_strings_hee) + new Date().toString();
+                twitterStrings = getPostContents(Constants.TWITTER_POST_CONTENTS4);
             }
             PostTwitterAsync postTwitterAsync = new PostTwitterAsync(this);
 //            postTwitterAsync.execute();
