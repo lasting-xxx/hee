@@ -81,7 +81,7 @@ public class HeeActivity extends Activity implements OnClickListener {
     }
     
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem settingItem = menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, "設定");
+        MenuItem settingItem = menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, getString(R.string.menu_setting));
         settingItem.setIcon(android.R.drawable.ic_menu_preferences);
         return super.onCreateOptionsMenu(menu);
     }
