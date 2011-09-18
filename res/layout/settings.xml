@@ -65,4 +65,12 @@
 		android:textSize="14dip"
 		android:singleLine="true" 
 		android:imeOptions="flagNoExtractUi" />
+	<Button
+		android:id="@+id/buttonSettingSave"
+		android:layout_below="@+id/editTwitterPostFour"
+		android:layout_marginLeft="5dip"
+		android:layout_marginRight="5dip"
+		android:text="保存する"
+		android:layout_width="150px"
+		android:layout_height="wrap_content" />
 </RelativeLayout>
