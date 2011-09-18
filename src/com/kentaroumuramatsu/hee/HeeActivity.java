@@ -50,6 +50,12 @@ public class HeeActivity extends Hee implements OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
+        
+        // 投稿内容の初期化
+        if (getPostContents(Constants.TWITTER_POST_CONTENTS1) == "") {
+        	setDefalutPostContents();
+        }
+        
         mpHee = MediaPlayer.create(this, R.raw.hee);
         buttonHee = (ImageView) findViewById(R.id.buttonHee);
         buttonHee.setOnClickListener(this);

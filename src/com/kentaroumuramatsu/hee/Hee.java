@@ -43,4 +43,19 @@ abstract class Hee extends Activity {
      	editor.putBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, auth);
      	editor.commit();
 	}
+	
+	public void setDefalutPostContents() {
+		SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_CONTENTS, MODE_PRIVATE);
+     	Editor editor = sp.edit();
+     	editor.putString(Constants.TWITTER_POST_CONTENTS1, getString(R.string.twitter_strings_kanojo));
+     	editor.putString(Constants.TWITTER_POST_CONTENTS2, getString(R.string.twitter_strings_hee));
+     	editor.putString(Constants.TWITTER_POST_CONTENTS3, getString(R.string.twitter_strings_yoji));
+     	editor.putString(Constants.TWITTER_POST_CONTENTS4, getString(R.string.twitter_strings_nya));
+     	editor.commit();
+    }
+	
+	public String getPostContents(String key) {
+    	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_CONTENTS, MODE_PRIVATE);
+    	return sp.getString(key, "");
+	}
 }
