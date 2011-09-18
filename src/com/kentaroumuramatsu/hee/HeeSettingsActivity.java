@@ -1,6 +1,7 @@
 package com.kentaroumuramatsu.hee;
 
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class HeeSettingsActivity extends Hee implements OnClickListener {
         twitterSettingButton = (ImageButton) findViewById(R.id.twitter_setting_button);
         twitterSettingButton.setOnClickListener(this);
         consumer = new CommonsHttpOAuthConsumer(Constants.TWITTER_CONSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
-        if(isTwitterOAuthStatus(this, consumer)) {
+        if(getIsTwitterPostUserAuthorize()) {
         	twitterOAuthFlg = true;
         	twitterSettingButton.setBackgroundDrawable(resource.getDrawable(R.drawable.twitter_button_on));
         } else {
@@ -63,7 +64,19 @@ public class HeeSettingsActivity extends Hee implements OnClickListener {
 			setPostContent(Constants.TWITTER_POST_CONTENTS2, et2.getText().toString());
 			setPostContent(Constants.TWITTER_POST_CONTENTS3, et3.getText().toString());
 			setPostContent(Constants.TWITTER_POST_CONTENTS4, et4.getText().toString());
-			finish();
+			if(twitterOAuthFlg) {
+				setIsTwitterPostUserAuthorize(true);
+				SharedPreferences pref = getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
+                String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
+                String tokenSecret=pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
+            	if(token.length() == 0 && tokenSecret.length() == 0) {
+            		doOauth();
+            	}
+            	finish();
+			} else {
+				setIsTwitterPostUserAuthorize(false);
+				finish();
+			}
 		}
     }
 }

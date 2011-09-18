@@ -109,6 +109,7 @@ public class HeeActivity extends Hee implements OnClickListener {
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
+        System.out.println("-------test-----");
         Uri uri=intent.getData();
         if (uri != null && uri.toString().startsWith(Constants.TWITTER_CALLBACK_URL)) {
             String verifier=uri.getQueryParameter(
@@ -150,26 +151,6 @@ public class HeeActivity extends Hee implements OnClickListener {
             }
             PostTwitterAsync postTwitterAsync = new PostTwitterAsync(this);
 //            postTwitterAsync.execute();
-        }
-    }
-
-    private void doOauth() {
-        try {
-            //トークンの読み込み
-            SharedPreferences pref=getSharedPreferences(Constants.TWITTER_TOKEN,MODE_PRIVATE);
-            String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
-            String tokenSecret=pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
-            //認証済み
-            if (token.length()>0 && tokenSecret.length()>0) {
-                consumer.setTokenWithSecret(token,tokenSecret);
-            } 
-            //認証処理のためブラウザ起動
-            else {
-                String authUrl = provider.retrieveRequestToken(consumer, Constants.TWITTER_CALLBACK_URL);
-                this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl)));
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 

@@ -1,9 +1,14 @@
 package com.kentaroumuramatsu.hee;
 
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
+import android.widget.Toast;
 
 import com.kentaroumuramatsu.hee.Constants;
 
@@ -65,4 +70,27 @@ abstract class Hee extends Activity {
     	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_CONTENTS, MODE_PRIVATE);
     	return sp.getString(key, "");
 	}
+	
+	public void doOauth() {
+		CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.TWITTER_CONSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
+		OAuthProvider provider = new DefaultOAuthProvider(Constants.TWITTER_REQUEST_TOKEN, Constants.TWITTER_ACCESS_TOKEN, Constants.TWITTER_AUTHORIZE);
+        try {
+            //トークンの読み込み
+            SharedPreferences pref=getSharedPreferences(Constants.TWITTER_TOKEN,MODE_PRIVATE);
+            String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
+            String tokenSecret=pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
+            //認証済み
+            if (token.length()>0 && tokenSecret.length()>0) {
+                consumer.setTokenWithSecret(token,tokenSecret);
+            } 
+            //認証処理のためブラウザ起動
+            else {
+                String authUrl = provider.retrieveRequestToken(consumer, Constants.TWITTER_CALLBACK_URL);
+                this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl)));
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+	
 }
