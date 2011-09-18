@@ -18,6 +18,8 @@ import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -31,26 +33,12 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
+import com.kentaroumuramatsu.hee.Constants;
 
-public class HeeActivity extends Activity implements OnClickListener{
+public class HeeActivity extends Activity implements OnClickListener {
 
     private CommonsHttpOAuthConsumer consumer;
     private OAuthProvider provider;
-
-    // Twitter関連
-    public final static String TWITTER_CALLBACK_URL = "hee://hee";
-    public final static String TWITTER_CONSUMER_KEY = "6TWCWs1V0Of2C7agwWL4dA";
-    public final static String TWITTER_CONSUMER_SECRET = "CmdYYpubN9RhWYflTmmW58TvOIPLraIFAAFRiplrg";
-    public final static String TWITTER_REQUEST_TOKEN = "http://twitter.com/oauth/request_token";
-    public final static String TWITTER_ACCESS_TOKEN = "http://twitter.com/oauth/access_token";
-    public final static String TWITTER_AUTHORIZE = "http://twitter.com/oauth/authorize";
-    public final static String TWITTER_USER_STATUS = "http://twitter.com/account/verify_credentials.xml";
-    public final static String TWITTER_FOLLOWING = "http://api.twitter.com/1/statuses/friends.xml";
-    public final static String TWITTER_FOLLOWER = "https://api.twitter.com/1/statuses/followers.xml";
-    public final static String TWITTER_UPDATE = "https://api.twitter.com/1/statuses/update.xml";
-    public final static String TWITTER_TOKEN = "twitter_token";
-    public final static String TWITTER_TOKEN_PUBLIC = "twitter_token";
-    public final static String TWITTER_TOKEN_SECRET = "twitter_token_secret";
     private String twitterStrings;
     private ImageView buttonHee;
     private MediaPlayer mpHee = null;
@@ -63,7 +51,31 @@ public class HeeActivity extends Activity implements OnClickListener{
         mpHee = MediaPlayer.create(this, R.raw.hee);
         buttonHee = (ImageView) findViewById(R.id.buttonHee);
         buttonHee.setOnClickListener(this);
-        doOauth();
+        consumer = new CommonsHttpOAuthConsumer(Constants.TWITTER_CONSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
+        provider = new DefaultOAuthProvider(Constants.TWITTER_REQUEST_TOKEN, Constants.TWITTER_ACCESS_TOKEN, Constants.TWITTER_AUTHORIZE);
+        
+        new AlertDialog.Builder(this)
+        .setIcon(R.drawable.icon)
+        .setTitle(getString(R.string.twitter_post_auth_title))
+        .setMessage(getString(R.string.twitter_post_auth_content))
+        .setPositiveButton(getString(R.string.twitter_post_auth_yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                /* ここにYESの処理 */
+            	//トークンの読み込み
+                SharedPreferences pref = getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
+                String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
+                String tokenSecret=pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
+            	if(token.length() == 0 && tokenSecret.length() == 0) {
+            		doOauth();
+            	}
+            }
+        })
+        .setNegativeButton(getString(R.string.twitter_post_auth_no), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                /* ここにNOの処理 */
+            }
+        })
+        .show();
     }
 
     @Override
@@ -71,31 +83,25 @@ public class HeeActivity extends Activity implements OnClickListener{
         super.onNewIntent(intent);
 
         Uri uri=intent.getData();
-        if (uri != null && uri.toString().startsWith(TWITTER_CALLBACK_URL)) {
+        if (uri != null && uri.toString().startsWith(Constants.TWITTER_CALLBACK_URL)) {
             String verifier=uri.getQueryParameter(
                     oauth.signpost.OAuth.OAUTH_VERIFIER);
             try {
                 provider.retrieveAccessToken(consumer,verifier);
                 //トークンの書き込み
-                SharedPreferences pref=getSharedPreferences(TWITTER_TOKEN,MODE_PRIVATE);
+                SharedPreferences pref=getSharedPreferences(Constants.TWITTER_TOKEN,MODE_PRIVATE);
                 SharedPreferences.Editor editor=pref.edit();
-                editor.putString(TWITTER_TOKEN_PUBLIC,consumer.getToken());
-                editor.putString(TWITTER_TOKEN_SECRET,consumer.getTokenSecret());
+                editor.putString(Constants.TWITTER_TOKEN_PUBLIC,consumer.getToken());
+                editor.putString(Constants.TWITTER_TOKEN_SECRET,consumer.getTokenSecret());
                 editor.commit();
 
             } catch(Exception e){
                 Log.d("",e.getMessage());
             }
         } else {
-            consumer = new CommonsHttpOAuthConsumer(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
-
-            //トークンの読み込み
-            SharedPreferences pref=getSharedPreferences(TWITTER_TOKEN,MODE_PRIVATE);
-            String token      =pref.getString(TWITTER_TOKEN_PUBLIC,"");
-            String tokenSecret=pref.getString(TWITTER_TOKEN_SECRET,"");
             //認証済み
-            if (token.length()>0 && tokenSecret.length()>0) {
-                consumer.setTokenWithSecret(token,tokenSecret);
+            if (Hee.isTwitterOAuthStatus(this, consumer)) {
+                consumer.setTokenWithSecret(Hee.getTwitterToken(this), Hee.getTwitterTokenSecret(this));
             } else {
                 finish();
             }
@@ -115,27 +121,24 @@ public class HeeActivity extends Activity implements OnClickListener{
             } else {
                 twitterStrings = getString(R.string.twitter_strings_hee) + new Date().toString();
             }
-            PostTwitterAsync postMentionAsync = new PostTwitterAsync(this);
-            postMentionAsync.execute();
+            PostTwitterAsync postTwitterAsync = new PostTwitterAsync(this);
+//            postTwitterAsync.execute();
         }
     }
 
     private void doOauth() {
         try {
-            consumer = new CommonsHttpOAuthConsumer(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
-            provider = new DefaultOAuthProvider(TWITTER_REQUEST_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_AUTHORIZE);
-
             //トークンの読み込み
-            SharedPreferences pref=getSharedPreferences(TWITTER_TOKEN,MODE_PRIVATE);
-            String token      =pref.getString(TWITTER_TOKEN_PUBLIC,"");
-            String tokenSecret=pref.getString(TWITTER_TOKEN_SECRET,"");
+            SharedPreferences pref=getSharedPreferences(Constants.TWITTER_TOKEN,MODE_PRIVATE);
+            String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
+            String tokenSecret=pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
             //認証済み
             if (token.length()>0 && tokenSecret.length()>0) {
                 consumer.setTokenWithSecret(token,tokenSecret);
             } 
             //認証処理のためブラウザ起動
             else {
-                String authUrl = provider.retrieveRequestToken(consumer, TWITTER_CALLBACK_URL);
+                String authUrl = provider.retrieveRequestToken(consumer, Constants.TWITTER_CALLBACK_URL);
                 this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl)));
             }
         } catch (Exception e) {
@@ -160,7 +163,7 @@ public class HeeActivity extends Activity implements OnClickListener{
         @Override
         protected List<BindData> doInBackground(String... params) {
             try {
-                HttpPost post = new HttpPost(TWITTER_UPDATE); 
+                HttpPost post = new HttpPost(Constants.TWITTER_UPDATE); 
                 final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
                 postParams.add(new BasicNameValuePair("status",twitterStrings));
                 post.setEntity(new UrlEncodedFormEntity(postParams, HTTP.UTF_8));

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">heeButton</string>
+    <string name="twitter_post_auth_title">"Twitter連携"</string>
+    <string name="twitter_post_auth_content">"Twitterに投稿しますか？"</string>
+    <string name="twitter_post_auth_yes">"はい"</string>
+    <string name="twitter_post_auth_no">"いいえ"</string>
     <string name="twitter_strings_kanojo">"彼女欲しいです。 #dpthon "</string>
     <string name="twitter_strings_hee">"へぇ #dpthon "</string>
     <string name="twitter_strings_yoji">"なるほど4時じゃねーよ #dpthon "</string>
