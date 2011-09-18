@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">heeButton</string>
+    <string name="twitter_post_string_title">"Twitterに投稿する言葉"</string>
     <string name="twitter_post_auth_title">"Twitter連携"</string>
     <string name="twitter_post_auth_content">"Twitterに投稿しますか？"</string>
     <string name="twitter_post_auth_yes">"はい"</string>
