@@ -85,6 +85,14 @@ public class HeeActivity extends Activity implements OnClickListener {
         settingItem.setIcon(android.R.drawable.ic_menu_preferences);
         return super.onCreateOptionsMenu(menu);
     }
+    
+ // メニューが選択された時の処理
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	if(item.getItemId() == 1) {
+    		return true;
+    	}
+        return false;
+    }
 
     @Override
     public void onNewIntent(Intent intent) {
