@@ -1,5 +1,7 @@
 package com.kentaroumuramatsu.hee;
 
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -13,21 +15,22 @@ import android.widget.ImageButton;
 
 public class HeeSettingsActivity extends Hee implements OnClickListener {
 
-	private CommonsHttpOAuthConsumer consumer;
 	private ImageButton twitterSettingButton;
 	private Button buttonSettingSave;
 	private Resources resource;
 	private boolean twitterOAuthFlg;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+        consumer = new CommonsHttpOAuthConsumer(Constants.TWITTER_CONSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
+        provider = new DefaultOAuthProvider(Constants.TWITTER_REQUEST_TOKEN, Constants.TWITTER_ACCESS_TOKEN, Constants.TWITTER_AUTHORIZE);
         resource = getResources();
         buttonSettingSave = (Button) findViewById(R.id.buttonSettingSave);
         buttonSettingSave.setOnClickListener(this);
         twitterSettingButton = (ImageButton) findViewById(R.id.twitter_setting_button);
         twitterSettingButton.setOnClickListener(this);
-        consumer = new CommonsHttpOAuthConsumer(Constants.TWITTER_CONSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
         if(getIsTwitterPostUserAuthorize()) {
         	twitterOAuthFlg = true;
         	twitterSettingButton.setBackgroundDrawable(resource.getDrawable(R.drawable.twitter_button_on));

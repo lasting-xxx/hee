@@ -14,6 +14,9 @@ import com.kentaroumuramatsu.hee.Constants;
 
 abstract class Hee extends Activity {
 	
+    protected CommonsHttpOAuthConsumer consumer;
+    protected OAuthProvider provider;
+	
 	public boolean isTwitterOAuthStatus (Activity activity, CommonsHttpOAuthConsumer consumer) {
 		//トークンの読み込み
         SharedPreferences pref = activity.getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
@@ -72,8 +75,6 @@ abstract class Hee extends Activity {
 	}
 	
 	public void doOauth() {
-		CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.TWITTER_CONSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
-		OAuthProvider provider = new DefaultOAuthProvider(Constants.TWITTER_REQUEST_TOKEN, Constants.TWITTER_ACCESS_TOKEN, Constants.TWITTER_AUTHORIZE);
         try {
             //トークンの読み込み
             SharedPreferences pref=getSharedPreferences(Constants.TWITTER_TOKEN,MODE_PRIVATE);

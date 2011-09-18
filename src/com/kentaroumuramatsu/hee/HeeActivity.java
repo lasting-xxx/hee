@@ -27,6 +27,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings.System;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,8 +40,6 @@ import com.kentaroumuramatsu.hee.Constants;
 
 public class HeeActivity extends Hee implements OnClickListener {
 
-    private CommonsHttpOAuthConsumer consumer;
-    private OAuthProvider provider;
     private String twitterStrings;
     private ImageView buttonHee;
     private MediaPlayer mpHee = null;
@@ -109,7 +108,6 @@ public class HeeActivity extends Hee implements OnClickListener {
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        System.out.println("-------test-----");
         Uri uri=intent.getData();
         if (uri != null && uri.toString().startsWith(Constants.TWITTER_CALLBACK_URL)) {
             String verifier=uri.getQueryParameter(
@@ -149,14 +147,17 @@ public class HeeActivity extends Hee implements OnClickListener {
             } else {
                 twitterStrings = getPostContents(Constants.TWITTER_POST_CONTENTS4);
             }
-            PostTwitterAsync postTwitterAsync = new PostTwitterAsync(this);
-//            postTwitterAsync.execute();
+            if(getIsTwitterPostUserAuthorize()) {
+            	java.lang.System.out.println("------test-----");
+	            PostTwitterAsync postTwitterAsync = new PostTwitterAsync(this);
+	            postTwitterAsync.execute();
+            }
         }
     }
 
     private static int getRandomInt() {
         int res = 0;
-        res = (int)Math.floor(Math.random() * (10-1+1))+1;
+        res = (int)Math.floor(Math.random() * (4))+1;
         return res;
     }
     
