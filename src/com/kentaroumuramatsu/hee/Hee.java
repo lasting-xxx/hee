@@ -9,7 +9,7 @@ import com.kentaroumuramatsu.hee.Constants;
 
 abstract class Hee extends Activity {
 	
-	public static boolean isTwitterOAuthStatus (Activity activity, CommonsHttpOAuthConsumer consumer) {
+	public boolean isTwitterOAuthStatus (Activity activity, CommonsHttpOAuthConsumer consumer) {
 		//トークンの読み込み
         SharedPreferences pref = activity.getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
         String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");

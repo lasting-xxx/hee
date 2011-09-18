@@ -121,7 +121,7 @@ public class HeeActivity extends Hee implements OnClickListener {
             }
         } else {
             //認証済み
-            if (Hee.isTwitterOAuthStatus(this, consumer)) {
+            if (isTwitterOAuthStatus(this, consumer)) {
                 consumer.setTokenWithSecret(getTwitterToken(), getTwitterTokenSecret());
             } else {
                 finish();
