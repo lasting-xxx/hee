@@ -86,9 +86,10 @@ public class HeeActivity extends Activity implements OnClickListener {
         return super.onCreateOptionsMenu(menu);
     }
     
- // メニューが選択された時の処理
+    // メニューが選択された時の処理
     public boolean onOptionsItemSelected(MenuItem item) {
     	if(item.getItemId() == 1) {
+    		startActivity(new Intent(this, HeeSettingsActivity.class));
     		return true;
     	}
         return false;
