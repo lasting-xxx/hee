@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -63,6 +64,8 @@ public class HeeActivity extends Activity implements OnClickListener {
         .setPositiveButton(getString(R.string.twitter_post_auth_yes), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 /* ここにYESの処理 */
+            	// ユーザーの投稿認証を保存
+            	setIsTwitterPostUserAuthorize(true);
             	//トークンの読み込み
                 SharedPreferences pref = getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
                 String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
@@ -75,6 +78,8 @@ public class HeeActivity extends Activity implements OnClickListener {
         .setNegativeButton(getString(R.string.twitter_post_auth_no), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 /* ここにNOの処理 */
+            	// ユーザーの投稿認証を保存
+            	setIsTwitterPostUserAuthorize(false);
             }
         })
         .show();
@@ -169,6 +174,18 @@ public class HeeActivity extends Activity implements OnClickListener {
         return res;
     }
 
+	private boolean getIsTwitterPostUserAuthorize() {
+    	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
+    	return sp.getBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, false);
+	}
+	
+	private void setIsTwitterPostUserAuthorize(boolean auth) {
+		SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
+     	Editor editor = sp.edit();
+     	editor.putBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, auth);
+     	editor.commit();
+	}
+	
     private class PostTwitterAsync extends AsyncTask<String, Integer, List<BindData>> {
 
         private HeeActivity heeActivity;

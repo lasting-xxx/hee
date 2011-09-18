@@ -18,4 +18,5 @@ public class Constants {
     public final static String TWITTER_TOKEN = "twitter_token";
     public final static String TWITTER_TOKEN_PUBLIC = "twitter_token";
     public final static String TWITTER_TOKEN_SECRET = "twitter_token_secret";
+    public final static String TWITTER_POST_USER_AUTHORIZE = "twitter_post_user_authorize";
 }
