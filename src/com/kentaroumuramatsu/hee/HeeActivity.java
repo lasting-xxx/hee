@@ -1,6 +1,7 @@
 package com.kentaroumuramatsu.hee;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 import com.kentaroumuramatsu.hee.Constants;
 
-public class HeeActivity extends Activity implements OnClickListener {
+public class HeeActivity extends Hee implements OnClickListener {
 
     private CommonsHttpOAuthConsumer consumer;
     private OAuthProvider provider;
@@ -123,7 +124,7 @@ public class HeeActivity extends Activity implements OnClickListener {
         } else {
             //認証済み
             if (Hee.isTwitterOAuthStatus(this, consumer)) {
-                consumer.setTokenWithSecret(Hee.getTwitterToken(this), Hee.getTwitterTokenSecret(this));
+                consumer.setTokenWithSecret(getTwitterToken(), getTwitterTokenSecret());
             } else {
                 finish();
             }

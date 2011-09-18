@@ -3,12 +3,15 @@ package com.kentaroumuramatsu.hee;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 import com.kentaroumuramatsu.hee.Constants;
 
-public class Hee {
+abstract class Hee extends Activity {
+	
 	public static boolean isTwitterOAuthStatus (Activity activity, CommonsHttpOAuthConsumer consumer) {
 		//トークンの読み込み
-        SharedPreferences pref = activity.getSharedPreferences(Constants.TWITTER_TOKEN, activity.MODE_PRIVATE);
+        SharedPreferences pref = activity.getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
         String token      =pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
         String tokenSecret=pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
         //認証済み
@@ -19,14 +22,25 @@ public class Hee {
         }
 	}
 	
-	public static String getTwitterToken (Activity activity) {
-		SharedPreferences pref = activity.getSharedPreferences(Constants.TWITTER_TOKEN, activity.MODE_PRIVATE);
+	public String getTwitterToken () {
+		SharedPreferences pref = getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
         return pref.getString(Constants.TWITTER_TOKEN_PUBLIC,"");
 	}
 	
-	public static String getTwitterTokenSecret (Activity activity) {
-		SharedPreferences pref = activity.getSharedPreferences(Constants.TWITTER_TOKEN, activity.MODE_PRIVATE);
+	public String getTwitterTokenSecret () {
+		SharedPreferences pref = getSharedPreferences(Constants.TWITTER_TOKEN, MODE_PRIVATE);
         return pref.getString(Constants.TWITTER_TOKEN_SECRET,"");
 	}
 	
+	private boolean getIsTwitterPostUserAuthorize() {
+    	SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
+    	return sp.getBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, false);
+	}
+	
+	private void setIsTwitterPostUserAuthorize(boolean auth) {
+		SharedPreferences sp = getSharedPreferences(Constants.TWITTER_POST_USER_AUTHORIZE, MODE_PRIVATE);
+     	Editor editor = sp.edit();
+     	editor.putBoolean(Constants.TWITTER_POST_USER_AUTHORIZE, auth);
+     	editor.commit();
+	}
 }
