@@ -15,7 +15,6 @@ import org.apache.http.protocol.HTTP;
 
 import com.kentaroumuramatsu.hee.R;
 
-import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.app.AlertDialog;
@@ -27,7 +26,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings.System;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -148,7 +146,6 @@ public class HeeActivity extends Hee implements OnClickListener {
                 twitterStrings = getPostContents(Constants.TWITTER_POST_CONTENTS4);
             }
             if(getIsTwitterPostUserAuthorize()) {
-            	java.lang.System.out.println("------test-----");
 	            PostTwitterAsync postTwitterAsync = new PostTwitterAsync(this);
 	            postTwitterAsync.execute();
             }

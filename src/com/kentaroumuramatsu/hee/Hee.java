@@ -1,7 +1,6 @@
 package com.kentaroumuramatsu.hee;
 
 import oauth.signpost.OAuthProvider;
-import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.app.Activity;
 import android.content.Intent;
