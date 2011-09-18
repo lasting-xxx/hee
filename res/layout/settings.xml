@@ -3,8 +3,20 @@
 	android:layout_height="fill_parent">
 	<TextView
 		android:id="@+id/twitter_setting_string"
+		android:layout_marginTop="10dip"
+		android:layout_marginLeft="10dip"
 		android:textColor="@drawable/white"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/twitter_post_auth_title" />
+	<ImageButton 
+		android:id="@+id/twitter_setting_button"
+		android:layout_below="@+id/twitter_setting_string"
+		android:layout_marginTop="10dip"
+		android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/twitter_button_off"
+		>
+	</ImageButton>
 </RelativeLayout>
