@@ -28,6 +28,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -76,6 +78,12 @@ public class HeeActivity extends Activity implements OnClickListener {
             }
         })
         .show();
+    }
+    
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem settingItem = menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, "設定");
+        settingItem.setIcon(android.R.drawable.ic_menu_preferences);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
